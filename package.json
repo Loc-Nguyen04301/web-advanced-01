@@ -3,6 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "11.11.1",
+    "@mantine/carousel": "6.0.19",
+    "@mantine/core": "6.0.19",
+    "@mantine/dates": "6.0.19",
+    "@mantine/dropzone": "6.0.19",
+    "@mantine/form": "6.0.19",
+    "@mantine/hooks": "6.0.19",
+    "@mantine/modals": "6.0.19",
+    "@mantine/notifications": "6.0.19",
+    "@mantine/nprogress": "6.0.19",
+    "@mantine/prism": "6.0.19",
+    "@mantine/rte": "5.10.5",
+    "@mantine/spotlight": "6.0.19",
     "@reduxjs/toolkit": "1.8.5",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
@@ -21,6 +34,8 @@
     "@types/webpack-env": "^1.18.0",
     "chalk": "4.1.2",
     "cross-env": "7.0.3",
+    "dayjs": "1.11.9",
+    "embla-carousel-react": "8.0.0-rc11",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react-hooks": "4.6.0",
@@ -74,12 +89,9 @@
     "lint:fix": "yarn run eslint --fix src",
     "lint:css": "stylelint src/**/*.css",
     "generate": "plop --plopfile internals/generators/plopfile.ts",
-    "cleanAndSetup": "ts-node ./internals/scripts/clean.ts",
     "prettify": "prettier --write",
-    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
