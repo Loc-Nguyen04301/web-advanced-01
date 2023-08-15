@@ -1809,6 +1809,13 @@
     "@mantine/utils" "6.0.19"
     react-dropzone "14.2.3"
 
+"@mantine/ds@6.0.19":
+  version "6.0.19"
+  resolved "https://registry.yarnpkg.com/@mantine/ds/-/ds-6.0.19.tgz#1c8967f6156779c42e8461857ea1557607e88fb2"
+  integrity sha512-e9F/O1jzsuSgQ8OnXqORnosYRMKHQJykbiXJEvwiJPmQhtXzhRNluG5sGPm2OmRcjTRcdEUDQmixZP0FRLutKA==
+  dependencies:
+    "@mantine/utils" "6.0.19"
+
 "@mantine/form@6.0.19":
   version "6.0.19"
   resolved "https://registry.yarnpkg.com/@mantine/form/-/form-6.0.19.tgz#3d97f08a45b1a8bc8840dbf77defd267abb20e39"
@@ -2246,6 +2253,19 @@
     "@svgr/plugin-jsx" "^5.5.0"
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
+
+"@tabler/icons-react@2.30.0":
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-react/-/icons-react-2.30.0.tgz#e7ece4b83d6cd66b3a4ec043b89bf18e5341c03e"
+  integrity sha512-aYggXusHW133L4KujJkVf4GIIrjg7tIRHgNf/n37mnoHqMjwNP+PjmVdrBM1Z8Ywx9PKFRlrwM0eUMDcG+I4HA==
+  dependencies:
+    "@tabler/icons" "2.30.0"
+    prop-types "^15.7.2"
+
+"@tabler/icons@2.30.0":
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-2.30.0.tgz#4ea3c4da56fd5653bb9d0be0dc7feaa33602555c"
+  integrity sha512-tvtmkI4ALjKThVVORh++sB9JnkFY7eGInKxNy+Df7WVQiF7T85tlvGADzlgX4Ic+CK5MIUzZ0jhOlQ/RRlgXpg==
 
 "@tabler/icons@^1.119.0":
   version "1.119.0"
