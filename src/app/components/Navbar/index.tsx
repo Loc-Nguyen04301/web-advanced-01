@@ -12,19 +12,10 @@ import {
   IconLicense,
   IconMessage2,
   IconBellRinging,
-  IconMessages,
   IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconUsers,
-  IconFileAnalytics,
-  IconDatabaseImport,
   IconReceipt2,
-  IconReceiptRefund,
-  IconLogout,
-  IconSwitchHorizontal,
 } from '@tabler/icons-react';
+import { useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles(theme => ({
   navbar: {
@@ -128,6 +119,8 @@ const tabs = {
 };
 
 const NavbarComponent = () => {
+  const user = useAppSelector(state => state.user);
+
   const { classes, cx } = useStyles();
   const [section, setSection] = useState<Section>(Section.ACCOUNT);
   const [activeTab, setActiveTab] = useState<ActiveTab>(
@@ -173,8 +166,11 @@ const NavbarComponent = () => {
           className={classes.title}
           color="dimmed"
           mb="xs"
+          sx={{
+            textAlign: 'center',
+          }}
         >
-          bgluesticker@mantine.dev
+          {user && user.username}
         </Text>
 
         <SegmentedControl

@@ -9,35 +9,70 @@ import {
   Group,
   Button,
   Divider,
-  Checkbox,
-  Anchor,
   Stack,
+  LoadingOverlay,
 } from '@mantine/core';
-import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
   GoogleButton,
   TwitterButton,
 } from '../../../components/SocialButtons/SocialButton';
+import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks/index';
+import { loginAccount } from 'store/reducers/user';
+import { useNavigate } from 'react-router-dom';
+import { alertAction } from 'store/reducers/alert';
 
 export function LoginPage() {
-  const [type, toggle] = useToggle(['login', 'register']);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user);
+  console.log(user);
+  const navigate = useNavigate();
+
   const form = useForm({
     initialValues: {
-      email: '',
-      name: '',
+      username: '',
       password: '',
-      terms: true,
     },
 
     validate: {
-      email: val => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
       password: val =>
-        val.length <= 6
-          ? 'Password should include at least 6 characters'
-          : null,
+        val.length < 6 ? 'Password should include at least 6 characters' : null,
     },
   });
+
+  const handleSubmit = async () => {
+    const data = { ...form.values };
+    if (form.isValid()) {
+      // call Login API
+      const config = {
+        method: 'POST',
+        url: `https://api.godoo.asia/bs/login`,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        data,
+      };
+      dispatch(alertAction({ loading: true }));
+      const res = await axios(config);
+      console.log(res);
+
+      if (res.data.error === 0) {
+        const payload = res.data.data;
+        dispatch(loginAccount(payload));
+        // SET USER TO LOCAL STORAGE
+        localStorage.setItem('user', JSON.stringify(payload));
+        dispatch(alertAction({ loading: false }));
+      } else {
+        console.log(res.data.message);
+        dispatch(alertAction({ errors: res.data.message }));
+      }
+    }
+  };
+
+  // RETURN HOMEPAGE IF USER LOGGED IN
+  React.useEffect(() => {
+    if (user.id) navigate('/');
+  }, [user, navigate]);
+
   return (
     <>
       <Helmet>
@@ -48,10 +83,9 @@ export function LoginPage() {
         />
       </Helmet>
       <Container size={'xs'}>
-        {' '}
         <Paper radius="md" p="xl">
           <Text size="lg" weight={500}>
-            Welcome to Mantine, {type} with
+            Welcome to Mantine
           </Text>
 
           <Group grow mb="md" mt="md">
@@ -67,28 +101,16 @@ export function LoginPage() {
 
           <form onSubmit={form.onSubmit(() => {})}>
             <Stack>
-              {type === 'register' && (
-                <TextInput
-                  label="Name"
-                  placeholder="Your name"
-                  value={form.values.name}
-                  onChange={event =>
-                    form.setFieldValue('name', event.currentTarget.value)
-                  }
-                  radius="md"
-                />
-              )}
-
               <TextInput
                 required
-                label="Email"
+                label="Username"
                 placeholder="hello@mantine.dev"
-                value={form.values.email}
+                value={form.values.username}
                 onChange={event =>
-                  form.setFieldValue('email', event.currentTarget.value)
+                  form.setFieldValue('username', event.currentTarget.value)
                 }
-                error={form.errors.email && 'Invalid email'}
                 radius="md"
+                autoComplete="true"
               />
 
               <PasswordInput
@@ -104,33 +126,13 @@ export function LoginPage() {
                   'Password should include at least 6 characters'
                 }
                 radius="md"
+                autoComplete="true"
               />
-
-              {type === 'register' && (
-                <Checkbox
-                  label="I accept terms and conditions"
-                  checked={form.values.terms}
-                  onChange={event =>
-                    form.setFieldValue('terms', event.currentTarget.checked)
-                  }
-                />
-              )}
             </Stack>
 
             <Group position="apart" mt="xl">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
-                onClick={() => toggle()}
-                size="xs"
-              >
-                {type === 'register'
-                  ? 'Already have an account? Login'
-                  : "Don't have an account? Register"}
-              </Anchor>
-              <Button type="submit" radius="xl">
-                {upperFirst(type)}
+              <Button type="submit" radius="xl" onClick={handleSubmit}>
+                Login
               </Button>
             </Group>
           </form>

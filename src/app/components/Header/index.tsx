@@ -19,6 +19,8 @@ import {
 import { MantineLogo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles(theme => ({
   link: {
@@ -90,10 +92,22 @@ const useStyles = createStyles(theme => ({
 }));
 
 const HeaderComponent = () => {
+  const user = useAppSelector(state => state.user);
+
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+  const navigate = useNavigate();
+
+  const goToLoginPage = () => {
+    navigate('/login');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.replace('/');
+  };
 
   return (
     <>
@@ -149,12 +163,22 @@ const HeaderComponent = () => {
               Academy
             </a>
           </Group>
-
           <Group className={classes.hiddenMobile}>
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            {user.id ? (
+              <>
+                <Button variant="default" color="red" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="default" onClick={goToLoginPage}>
+                  Log in
+                </Button>
+                <Button>Sign up</Button>
+              </>
+            )}
           </Group>
-
           <Burger
             opened={drawerOpened}
             onClick={toggleDrawer}
@@ -198,11 +222,12 @@ const HeaderComponent = () => {
             my="sm"
             color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
           />
-
-          <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
+          {/* {user || (
+            <Group position="center" grow pb="xl" px="md">
+              <Button variant="default">Log in</Button>
+              <Button>Sign up</Button>
+            </Group>
+          )} */}
         </ScrollArea>
       </Drawer>
     </>

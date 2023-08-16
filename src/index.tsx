@@ -19,15 +19,12 @@ import 'sanitize.css/sanitize.css';
 import { App } from 'app';
 
 import { HelmetProvider } from 'react-helmet-async';
-
-import { configureAppStore } from 'store/configureStore';
-
+import { store } from 'store';
 import reportWebVitals from 'reportWebVitals';
 
 // Initialize languages
 import './locales/i18n';
 
-const store = configureAppStore();
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
