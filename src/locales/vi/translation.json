@@ -1,0 +1,20 @@
+{
+  "LoginPage": {
+    "username": "Tên người dùng",
+    "password": "Mật khẩu",
+    "underline-text": "Tiếp tục với email",
+    "login": "Đăng nhập",
+    "title": "Chào mừng Mantine"
+  },
+  "HomePage": {
+    "Header": {
+      "home": "trang chủ",
+      "feature": "tính năng",
+      "learn": "học tập",
+      "academy": "học viện",
+      "log-in": "Đăng nhập",
+      "sign-up": "Đăng ký",
+      "log-out": "Đăng xuất"
+    }
+  }
+}

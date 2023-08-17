@@ -10,7 +10,7 @@ import {
   Button,
   Divider,
   Stack,
-  LoadingOverlay,
+  Center,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
@@ -22,11 +22,14 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks/index';
 import { loginAccount } from 'store/reducers/user';
 import { useNavigate } from 'react-router-dom';
 import { alertAction } from 'store/reducers/alert';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/translations';
+import { LanguagePicker } from 'components/LanguagePicker';
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
-  console.log(user);
   const navigate = useNavigate();
 
   const form = useForm({
@@ -62,7 +65,6 @@ export function LoginPage() {
         localStorage.setItem('user', JSON.stringify(payload));
         dispatch(alertAction({ loading: false }));
       } else {
-        console.log(res.data.message);
         dispatch(alertAction({ errors: res.data.message }));
       }
     }
@@ -82,10 +84,13 @@ export function LoginPage() {
           content="A Boilerplate application LoginPage"
         />
       </Helmet>
-      <Container size={'xs'}>
+      <Container size={'xs'} pt={100}>
+        <Center>
+          <LanguagePicker />
+        </Center>
         <Paper radius="md" p="xl">
           <Text size="lg" weight={500}>
-            Welcome to Mantine
+            {t(translations.LoginPage.title)}
           </Text>
 
           <Group grow mb="md" mt="md">
@@ -94,7 +99,7 @@ export function LoginPage() {
           </Group>
 
           <Divider
-            label="Or continue with email"
+            label={t(translations.LoginPage['underline-text'])}
             labelPosition="center"
             my="lg"
           />
@@ -103,7 +108,7 @@ export function LoginPage() {
             <Stack>
               <TextInput
                 required
-                label="Username"
+                label={t(translations.LoginPage.username)}
                 placeholder="hello@mantine.dev"
                 value={form.values.username}
                 onChange={event =>
@@ -115,8 +120,8 @@ export function LoginPage() {
 
               <PasswordInput
                 required
-                label="Password"
-                placeholder="Your password"
+                label={t(translations.LoginPage.password)}
+                placeholder={t(translations.LoginPage.password)}
                 value={form.values.password}
                 onChange={event =>
                   form.setFieldValue('password', event.currentTarget.value)
@@ -132,7 +137,7 @@ export function LoginPage() {
 
             <Group position="apart" mt="xl">
               <Button type="submit" radius="xl" onClick={handleSubmit}>
-                Login
+                {t(translations.LoginPage.login)}
               </Button>
             </Group>
           </form>

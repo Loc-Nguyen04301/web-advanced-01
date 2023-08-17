@@ -97,12 +97,12 @@ enum Section {
 }
 
 enum ActiveTab {
-  NOTIFICATIONS = 'Notifications',
-  BILLING = 'Billing',
-  SECURITY = 'Security',
-  ORDERS = 'Orders',
-  RECEIPTS = 'Receipts',
-  REVIEWS = 'Reviews',
+  NOTIFICATIONS = 'notifications',
+  BILLING = 'billing',
+  SECURITY = 'security',
+  ORDERS = 'orders',
+  RECEIPTS = 'receipts',
+  REVIEWS = 'reviews',
 }
 
 const tabs = {
@@ -140,7 +140,7 @@ const NavbarComponent = () => {
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
+      <Text sx={{ textTransform: 'capitalize' }}>{item.label}</Text>
     </a>
   ));
 

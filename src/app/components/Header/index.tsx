@@ -21,6 +21,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+import { LanguagePicker } from 'components/LanguagePicker';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/translations';
 
 const useStyles = createStyles(theme => ({
   link: {
@@ -33,6 +36,7 @@ const useStyles = createStyles(theme => ({
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     fontWeight: 500,
     fontSize: theme.fontSizes.sm,
+    textTransform: 'capitalize',
 
     [theme.fn.smallerThan('sm')]: {
       height: rem(42),
@@ -92,6 +96,8 @@ const useStyles = createStyles(theme => ({
 }));
 
 const HeaderComponent = () => {
+  const { t } = useTranslation();
+
   const user = useAppSelector(state => state.user);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -120,7 +126,7 @@ const HeaderComponent = () => {
             className={classes.hiddenMobile}
           >
             <a href="/" className={classes.link}>
-              Home
+              {t(translations.HomePage.Header.home)}
             </a>
             <HoverCard
               width={600}
@@ -133,7 +139,7 @@ const HeaderComponent = () => {
                 <a href="/" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Features
+                      {t(translations.HomePage.Header.feature)}
                     </Box>
                     <IconChevronDown
                       size={16}
@@ -157,25 +163,32 @@ const HeaderComponent = () => {
               </HoverCard.Dropdown>
             </HoverCard>
             <a href="/" className={classes.link}>
-              Learn
+              {t(translations.HomePage.Header.learn)}
             </a>
             <a href="/" className={classes.link}>
-              Academy
+              {t(translations.HomePage.Header.academy)}
             </a>
           </Group>
           <Group className={classes.hiddenMobile}>
             {user.id ? (
               <>
-                <Button variant="default" color="red" onClick={handleLogout}>
-                  Logout
+                <Button
+                  variant="default"
+                  color="red"
+                  onClick={handleLogout}
+                  sx={{ textTransform: 'capitalize' }}
+                >
+                  {t(translations.HomePage.Header['log-out'])}
                 </Button>
+                <LanguagePicker />
               </>
             ) : (
               <>
                 <Button variant="default" onClick={goToLoginPage}>
-                  Log in
+                  {t(translations.HomePage.Header['log-in'])}
                 </Button>
-                <Button>Sign up</Button>
+                <Button> {t(translations.HomePage.Header['sign-up'])}</Button>
+                <LanguagePicker />
               </>
             )}
           </Group>
